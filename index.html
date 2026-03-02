@@ -351,37 +351,114 @@ preview.innerText = formatJsonLikeDataFile(dataJson);
 
 function removeUnnecessary(){
 
-const openIds = ordersJson.map(o => String(o.id));
-const unique = arr => [...new Set(arr)];
+const openBuyIds = ordersJson
+.filter(o => o.side.toLowerCase() === "buy")
+.map(o => String(o.id));
 
-const cleanObject = (obj)=>{
-let original = Object.keys(obj);
-let filtered = unique(original.filter(k => openIds.includes(k)));
+const openSellIds = ordersJson
+.filter(o => o.side.toLowerCase() === "sell")
+.map(o => String(o.id));
 
-for(let k of original){
-if(filtered.length>=2) break;
-if(!filtered.includes(k)) filtered.push(k);
+const openSymbols = ordersJson.map(o => o.product_symbol.toUpperCase());
+
+
+// ---------------- MIN 2 HELPER ----------------
+function ensureMinTwo(allIds, openIds){
+
+let unique = [...new Set(allIds.map(String))];
+
+// keep all open
+let final = unique.filter(id => openIds.includes(id));
+
+// fallback older if less than 2
+for(let id of unique){
+if(final.length >= 2) break;
+if(!final.includes(id)) final.push(id);
 }
 
-if(filtered.length===0 && original.length>0) filtered.push(original[0]);
+// if still <2 but some exist
+while(final.length < 2 && unique.length > 0){
+let next = unique.find(id => !final.includes(id));
+if(!next) break;
+final.push(next);
+}
 
-let newObj={};
-filtered.forEach(k=> newObj[k]=obj[k]);
+return final;
+}
+
+function filterByIds(obj, ids){
+let newObj = {};
+ids.forEach(id=>{
+if(obj && obj[id] !== undefined){
+newObj[id] = obj[id];
+}
+});
 return newObj;
-};
+}
 
-dataJson.allowedOrderforFunc2 = cleanObject(dataJson.allowedOrderforFunc2);
-dataJson.minUpdateOrderLimitForFunc2 = cleanObject(dataJson.minUpdateOrderLimitForFunc2);
-dataJson.dropThresholdForFunc2 = cleanObject(dataJson.dropThresholdForFunc2);
-dataJson.tickSizeForFunc2 = cleanObject(dataJson.tickSizeForFunc2);
-dataJson.filterSizeForFunc2 = cleanObject(dataJson.filterSizeForFunc2);
-dataJson.PriceChangeDiffForFunc3 = cleanObject(dataJson.PriceChangeDiffForFunc3);
-dataJson.marketPriceCorrectionForFunc3 = cleanObject(dataJson.marketPriceCorrectionForFunc3);
-dataJson.filterSizeForFunc3 = cleanObject(dataJson.filterSizeForFunc3);
-dataJson.minTargetPriceToSellForFunc3 = cleanObject(dataJson.minTargetPriceToSellForFunc3);
 
+// ================= FUNC2 =================
+let func2All = [
+...Object.keys(dataJson.allowedOrderforFunc2 || {}),
+...Object.keys(dataJson.minUpdateOrderLimitForFunc2 || {}),
+...Object.keys(dataJson.dropThresholdForFunc2 || {}),
+...Object.keys(dataJson.tickSizeForFunc2 || {}),
+...Object.keys(dataJson.filterSizeForFunc2 || {})
+];
+
+let bestBuy = ensureMinTwo(func2All, openBuyIds);
+
+dataJson.allowedOrderforFunc2 = filterByIds(dataJson.allowedOrderforFunc2, bestBuy);
+dataJson.minUpdateOrderLimitForFunc2 = filterByIds(dataJson.minUpdateOrderLimitForFunc2, bestBuy);
+dataJson.dropThresholdForFunc2 = filterByIds(dataJson.dropThresholdForFunc2, bestBuy);
+dataJson.tickSizeForFunc2 = filterByIds(dataJson.tickSizeForFunc2, bestBuy);
+dataJson.filterSizeForFunc2 = filterByIds(dataJson.filterSizeForFunc2, bestBuy);
+
+
+// ================= FUNC3 =================
+let func3All = [
+...Object.keys(dataJson.PriceChangeDiffForFunc3 || {}),
+...Object.keys(dataJson.marketPriceCorrectionForFunc3 || {}),
+...Object.keys(dataJson.filterSizeForFunc3 || {}),
+...Object.keys(dataJson.minTargetPriceToSellForFunc3 || {})
+];
+
+let bestSell = ensureMinTwo(func3All, openSellIds);
+
+dataJson.PriceChangeDiffForFunc3 = filterByIds(dataJson.PriceChangeDiffForFunc3, bestSell);
+dataJson.marketPriceCorrectionForFunc3 = filterByIds(dataJson.marketPriceCorrectionForFunc3, bestSell);
+dataJson.filterSizeForFunc3 = filterByIds(dataJson.filterSizeForFunc3, bestSell);
+dataJson.minTargetPriceToSellForFunc3 = filterByIds(dataJson.minTargetPriceToSellForFunc3, bestSell);
+
+
+// ================= SELL LIST =================
+let sellList = [...new Set((dataJson.updateSellOrderIdList || []).map(String))];
+let bestSellList = ensureMinTwo(sellList, openSellIds);
+dataJson.updateSellOrderIdList = bestSellList.map(Number);
+
+
+// ================= SYMBOLS =================
+let uniqueSymbols = [...new Set(dataJson.symbols || [])];
+
+let finalSymbols = uniqueSymbols.filter(s => openSymbols.includes(s));
+
+for(let s of uniqueSymbols){
+if(finalSymbols.length >= 2) break;
+if(!finalSymbols.includes(s)) finalSymbols.push(s);
+}
+
+while(finalSymbols.length < 2 && uniqueSymbols.length > 0){
+let next = uniqueSymbols.find(s => !finalSymbols.includes(s));
+if(!next) break;
+finalSymbols.push(next);
+}
+
+dataJson.symbols = finalSymbols;
+
+
+// ---------------- DONE ----------------
 preview.innerText = formatJsonLikeDataFile(dataJson);
-alert("Cleanup Done");
+alert("Cleanup Done (Min 2 Safe)");
 }
 
 function formatJsonLikeDataFile(obj){

@@ -482,6 +482,7 @@ EDIT
                 symbol: sym,
                 id: id,
                 side: side,
+                size: order ? order.size : "N/A",
                 price: order ? order.limit_price : "N/A",
                 a: i[0].value,
                 b: i[1].value,
@@ -511,7 +512,7 @@ EDIT
 <div>ID: ${q.id}</div>
 <div>${q.side}</div>
 <div>Price: <b class="price-H">${(q.limit_price || q.price) ?? "N/A"}</b></div>
-<div>Size: ${o.size}</div>
+<div>Size: ${q.size}</div>
 <button class="btn btn-danger mt-2" onclick="removeQueue(${index})">Remove</button>
 </div>
 </div>`;

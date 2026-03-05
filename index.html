@@ -1,255 +1,396 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<style>
-:root{
---bg:#0b1220;
---text:#e5e7eb;
---muted:#94a3b8;
---primary:#4f46e5;
---success:#16a34a;
---warning:#f59e0b;
---danger:#ef4444;
---dark:#0f172a;
-}
-.text-center {
-background: #baf9ff;
-text-align: center !important;
-}
-body{
-background:radial-gradient(1200px 700px at 10% 10%, rgba(79,70,229,.06), transparent), var(--bg);
-font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-color:var(--text)
-}
-.navbar{
-background:rgba(15,23,42,.7);
-backdrop-filter:blur(8px);
-border-bottom:1px solid rgba(148,163,184,.15);
-box-shadow:0 10px 30px rgba(0,0,0,.2)
-}
-.navbar-brand{font-weight:600;letter-spacing:.3px}
-.navbar .nav-link{color:var(--muted);font-weight:500}
-.navbar .nav-link.active,.navbar .nav-link:hover{color:#fff}
-.navbar-toggler{border-color:rgba(148,163,184,.3)}
-.navbar-toggler-icon{filter:invert(1)}
-.navbar .btn{border-radius:10px}
-.brand-dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#06b6d4);box-shadow:0 0 0 3px rgba(79,70,229,.2)}
-.container{max-width:1200px}
-.form-control{
-background:#0b1324;
-border-color:rgba(148,163,184,.2);
-color:#e5e7eb;
-border-radius:12px;
-transition:border-color .2s, box-shadow .2s, transform .05s
-}
-.form-control:focus{
-border-color:rgba(79,70,229,.5);
-box-shadow:0 0 0 .2rem rgba(79,70,229,.15);
-background:#0b1324;
-color:#fff
-}
-.btn{
-border-radius:12px;
-transition:transform .05s, box-shadow .2s, background-color .2s, border-color .2s
-}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background-color:var(--primary);border-color:var(--primary)}
-.btn-success{background-color:var(--success);border-color:var(--success)}
-.btn-warning{background-color:var(--warning);border-color:var(--warning)}
-.btn-danger{background-color:var(--danger);border-color:var(--danger)}
-.btn-light{background:#f3f4f6;color:#111827;border-color:#e5e7eb}
-.btn-light:hover{background:#e5e7eb}
-.card{
-background: #4a375a;
-border:1px solid rgba(148,163,184,.2);
-border-radius:16px;
-box-shadow:0 10px 20px rgba(0,0,0,.25);
-transition:transform .06s ease, box-shadow .2s ease
-}
-.card:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(0,0,0,.3)}
-.card-buy{background:linear-gradient(180deg, rgba(6,95,70,.9), rgba(6,85,60,.85))}
-.card-sell{background:linear-gradient(180deg, rgba(127,29,29,.9), rgba(107,19,19,.85))}
-.queue-card{background:linear-gradient(180deg, rgba(30,41,59,.95), rgba(24,33,48,.9))}
-.badge-added{
-background:#22c55e;
-color:#0b111f;
-border-radius:999px;
-padding:.35rem .6rem;
-font-weight:600
-}
-hr{border-color:rgba(148,163,184,.12);margin:2rem 0}
-h4{margin-bottom:1rem;letter-spacing:.2px;color:#dbeafe}
-#preview{
-font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-background:#0b1324;
-border:1px solid rgba(148,163,184,.2);
-border-radius:12px;
-max-height:360px;
-overflow:auto
-}
-#loadingSpinner .spinner-border{width:2rem;height:2rem}
-#inlineLoading{
-display:flex;
-align-items:center;
-gap:.6rem;
-color:var(--muted);
-height:28px;
-opacity:0;
-visibility:hidden;
-transition:opacity .2s ease;
-}
-#inlineLoading.active{opacity:1;visibility:visible}
-#inlineLoading .spinner-border{width:1rem;height:1rem;border-width:.2rem;color:var(--primary)}
-.config .form-control{
-background:rgba(0,0,0,.2);
-border-color:rgba(148,163,184,.25);
-color:#e5e7eb
-}
-.config .btn-warning{background-color:#f59e0b;color:#0b111f}
-footer{
-background:rgba(15,23,42,.75);
-border-top:1px solid rgba(148,163,184,.15);
-box-shadow:0 -10px 30px rgba(0,0,0,.2) inset;
-border-radius:12px
-}
-body{scroll-behavior:smooth}
-</style>
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --primary: #4f46e5;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+        }
+
+        .text-center {
+            background: #baf9ff;
+            text-align: center !important;
+        }
+
+        body {
+            background: radial-gradient(1200px 700px at 10% 10%, rgba(79, 70, 229, .06), transparent), var(--bg);
+            font-family: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text)
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, .7);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(148, 163, 184, .15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .2)
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: .3px
+        }
+
+        .navbar .nav-link {
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        .navbar .nav-link.active,
+        .navbar .nav-link:hover {
+            color: #fff
+        }
+
+        .navbar-toggler {
+            border-color: rgba(148, 163, 184, .3)
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1)
+        }
+
+        .navbar .btn {
+            border-radius: 10px
+        }
+
+        .brand-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #06b6d4);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .2)
+        }
+
+        .container {
+            max-width: 1200px
+        }
+
+        .form-control {
+            background: #0b1324;
+            border-color: rgba(148, 163, 184, .2);
+            color: #e5e7eb;
+            border-radius: 12px;
+            transition: border-color .2s, box-shadow .2s, transform .05s
+        }
+
+        .form-control:focus {
+            border-color: rgba(79, 70, 229, .5);
+            box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .15);
+            background: #0b1324;
+            color: #fff
+        }
+
+        .btn {
+            border-radius: 12px;
+            transition: transform .05s, box-shadow .2s, background-color .2s, border-color .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary)
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success)
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            border-color: var(--warning)
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            border-color: var(--danger)
+        }
+
+        .btn-light {
+            background: #f3f4f6;
+            color: #111827;
+            border-color: #e5e7eb
+        }
+
+        .btn-light:hover {
+            background: #e5e7eb
+        }
+
+        .card {
+            background: #4a375a;
+            border: 1px solid rgba(148, 163, 184, .2);
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+            transition: transform .06s ease, box-shadow .2s ease
+        }
+
+        .card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, .3)
+        }
+
+        .card-buy {
+            background: linear-gradient(180deg, rgba(6, 95, 70, .9), rgba(6, 85, 60, .85))
+        }
+
+        .card-sell {
+            background: linear-gradient(180deg, rgba(127, 29, 29, .9), rgba(107, 19, 19, .85))
+        }
+
+        .queue-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, .95), rgba(24, 33, 48, .9))
+        }
+
+        .badge-added {
+            background: #22c55e;
+            color: #0b111f;
+            border-radius: 999px;
+            padding: .35rem .6rem;
+            font-weight: 600
+        }
+
+        hr {
+            border-color: rgba(148, 163, 184, .12);
+            margin: 2rem 0
+        }
+
+        h4 {
+            margin-bottom: 1rem;
+            letter-spacing: .2px;
+            color: #dbeafe
+        }
+
+        #preview {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            background: #0b1324;
+            border: 1px solid rgba(148, 163, 184, .2);
+            border-radius: 12px;
+            max-height: 360px;
+            overflow: auto
+        }
+
+        #loadingSpinner .spinner-border {
+            width: 2rem;
+            height: 2rem
+        }
+
+        #inlineLoading {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            color: var(--muted);
+            height: 28px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .2s ease;
+        }
+
+        #inlineLoading.active {
+            opacity: 1;
+            visibility: visible
+        }
+
+        #inlineLoading .spinner-border {
+            width: 1rem;
+            height: 1rem;
+            border-width: .2rem;
+            color: var(--primary)
+        }
+
+        .config .form-control {
+            background: rgba(0, 0, 0, .2);
+            border-color: rgba(148, 163, 184, .25);
+            color: #e5e7eb
+        }
+
+        .config .btn-warning {
+            background-color: #f59e0b;
+            color: #0b111f
+        }
+
+        footer {
+            background: rgba(15, 23, 42, .75);
+            border-top: 1px solid rgba(148, 163, 184, .15);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, .2) inset;
+            border-radius: 12px
+        }
+
+        body {
+            scroll-behavior: smooth
+        }
+    </style>
 </head>
 
 <body class="p-3">
 
-<nav class="navbar navbar-dark navbar-expand-lg mb-4 sticky-top">
-<div class="container">
-<a class="navbar-brand d-flex align-items-center" href="#">
-<span class="brand-dot me-2"></span>
-<span>Order Manager</span>
-</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="mainNav">
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<li class="nav-item"><a class="nav-link" href="#open-orders">Open Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="#queue">Queue</a></li>
-<li class="nav-item"><a class="nav-link" href="#preview-section">Preview</a></li>
-</ul>
-<div class="d-flex gap-2">
-<a class="btn btn-outline-light" href="#data-sources">Sources</a>
-<button class="btn btn-primary" onclick="fetchAll()">Refresh</button>
-</div>
-</div>
-</div>
-</nav>
+    <nav class="navbar navbar-dark navbar-expand-lg mb-4 sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <span class="brand-dot me-2"></span>
+                <span>Order Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#open-orders">Open Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#queue">Queue</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#preview-section">Preview</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
 
-<main class="container py-3">
-<div id="data-sources" class="card p-3 mb-3">
-<input id="dataUrl" class="form-control mb-2" value="https://raw.githubusercontent.com/aisaf8873/abc/main/data.json">
-<input id="ordersUrl" class="form-control mb-2" value="https://raw.githubusercontent.com/aisaf8873/abc/main/openOrders.json">
-<button id="fetchBtn" class="btn btn-primary w-100" onclick="fetchAll()">Fetch</button>
-<div id="inlineLoading" class="mt-2" aria-live="polite" role="status">
-<div class="spinner-border text-primary" aria-hidden="true"></div>
-<span>Fetching data...</span>
-</div>
-</div>
+                    <div class="form-check text-light">
+                        <input class="form-check-input" type="checkbox" id="useApi">
+                        <label class="form-check-label">USE API</label>
+                    </div>
 
- 
+                    <div id="apiBox" class="d-none">
+                        <input id="apiToken" class="form-control form-control-sm"
+                            placeholder="GitHub Token e.g. github_pat_xxxxx">
+                        <button class="btn btn-success btn-sm mt-1 w-100" onclick="saveApi()">Save</button>
+                    </div>
 
-<h4 id="open-orders">Open Orders</h4>
-<div id="orders" class="row"></div>
+                    <a class="btn btn-outline-light" href="#data-sources">Sources</a>
+                    <button class="btn btn-primary" onclick="fetchAll()">Refresh</button>
 
-<hr>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<h4 id="queue">Queue</h4>
-<div id="queueView" class="row"></div>
+    <main class="container py-3">
+        <div id="data-sources" class="card p-3 mb-3">
+            <input id="dataUrl" class="form-control mb-2"
+                value="https://raw.githubusercontent.com/aisaf8873/abc/main/data.json">
+            <input id="ordersUrl" class="form-control mb-2"
+                value="https://raw.githubusercontent.com/aisaf8873/abc/main/openOrders.json">
+            <button id="fetchBtn" class="btn btn-primary w-100" onclick="fetchAll()">Fetch</button>
+            <div id="inlineLoading" class="mt-2" aria-live="polite" role="status">
+                <div class="spinner-border text-primary" aria-hidden="true"></div>
+                <span>Fetching data...</span>
+            </div>
+        </div>
 
-<hr>
 
-<h4 id="preview-section">Preview</h4>
-<div class="position-relative">
-<button onclick="copyJson()" class="btn btn-sm btn-light position-absolute top-0 end-0 m-2">Copy</button>
-<pre id="preview" class="bg-dark p-3 rounded text-white"></pre>
-</div>
 
-<button class="btn btn-success w-100 mt-3" onclick="finalMerge()">FINAL DO IT</button>
-<button class="btn btn-warning w-100 mt-2" onclick="removeUnnecessary()">Remove Unnecessary</button>
+        <h4 id="open-orders">Open Orders</h4>
+        <div id="orders" class="row"></div>
 
-</main>
-<footer class="bg-dark text-center text-light p-3 mt-4">
-Standalone GitHub Tool
-</footer>
+        <hr>
 
-<script>
+        <h4 id="queue">Queue</h4>
+        <div id="queueView" class="row"></div>
 
-let dataJson={}, ordersJson=[], queue=[];
+        <hr>
 
-window.onload = fetchAll;
+        <h4 id="preview-section">Preview</h4>
+        <div class="position-relative">
+            <button onclick="copyJson()" class="btn btn-sm btn-light position-absolute top-0 end-0 m-2">Copy</button>
+            <pre id="preview" class="bg-dark p-3 rounded text-white"></pre>
+        </div>
 
-function showLoading(){
-inlineLoading.classList.add("active");
-fetchBtn.disabled = true;
-}
+        <button class="btn btn-success w-100 mt-3" onclick="finalMerge()">FINAL DO IT</button>
+        <button class="btn btn-warning w-100 mt-2" onclick="removeUnnecessary()">Remove Unnecessary</button>
 
-function hideLoading(){
-inlineLoading.classList.remove("active");
-fetchBtn.disabled = false;
-}
+    </main>
+    <footer class="bg-dark text-center text-light p-3 mt-4">
 
-async function fetchAll(){
+        <button id="uploadBtn" class="btn btn-success mb-2 d-none" onclick="uploadJson()">
+            Upload data.json
+        </button>
 
-showLoading();
+        <div class="progress d-none" id="uploadProgressBox">
+            <div id="uploadProgress" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%">0%
+            </div>
+        </div>
+        <div id="uploadStatus" class="mt-2 text-light small"></div>
+        Standalone GitHub Tool
 
-try{
-dataJson = await fetch(dataUrl.value).then(r=>r.json());
-ordersJson = await fetch(ordersUrl.value).then(r=>r.json());
-render();
-}
-catch(e){
-alert("Fetch failed");
-console.error(e);
-}
+    </footer>
 
-hideLoading();
-}
+    <script>
 
-function isAlreadyAdded(id){
-id = String(id);
-return (
-dataJson.allowedOrderforFunc2[id] !== undefined ||
-dataJson.PriceChangeDiffForFunc3[id] !== undefined ||
-dataJson.updateSellOrderIdList?.map(x=>String(x)).includes(id) ||
-queue.some(q=>String(q.id)===id)
-);
-}
+        let dataJson = {}, ordersJson = [], queue = [];
 
-function render(){
+        window.onload = fetchAll;
 
-orders.innerHTML="";
+        function showLoading() {
+            inlineLoading.classList.add("active");
+            fetchBtn.disabled = true;
+        }
 
-if(!ordersJson || ordersJson.length===0){
-orders.innerHTML = `<div class="col-12">
+        function hideLoading() {
+            inlineLoading.classList.remove("active");
+            fetchBtn.disabled = false;
+        }
+
+        async function fetchAll() {
+
+            showLoading();
+
+            try {
+                dataJson = await fetch(dataUrl.value).then(r => r.json());
+                ordersJson = await fetch(ordersUrl.value).then(r => r.json());
+                render();
+            }
+            catch (e) {
+                alert("Fetch failed");
+                console.error(e);
+            }
+
+            hideLoading();
+        }
+
+        function isAlreadyAdded(id) {
+            id = String(id);
+            return (
+                dataJson.allowedOrderforFunc2[id] !== undefined ||
+                dataJson.PriceChangeDiffForFunc3[id] !== undefined ||
+                dataJson.updateSellOrderIdList?.map(x => String(x)).includes(id) ||
+                queue.some(q => String(q.id) === id)
+            );
+        }
+
+        function render() {
+
+            orders.innerHTML = "";
+
+            if (!ordersJson || ordersJson.length === 0) {
+                orders.innerHTML = `<div class="col-12">
 <div class="alert alert-secondary text-center">No Open Orders</div>
 </div>`;
-}else{
+            } else {
 
-ordersJson.forEach(o=>{
-const sym=o.product_symbol.toUpperCase();
-const id=o.id;
-const side=o.side.toLowerCase();
-const added=isAlreadyAdded(id);
+                ordersJson.forEach(o => {
+                    const sym = o.product_symbol.toUpperCase();
+                    const id = o.id;
+                    const side = o.side.toLowerCase();
+                    const added = isAlreadyAdded(id);
 
-orders.innerHTML+=`
+                    orders.innerHTML += `
 <div class="col-md-4">
-<div class="card text-white ${side=="buy"?"card-buy":"card-sell"} p-3 mb-3">
+<div class="card text-white ${side == "buy" ? "card-buy" : "card-sell"} p-3 mb-3">
 <b>${sym}</b>
 <div>ID: ${id}</div>
 <div>${side}</div>
-${added?'<span class="badge badge-added mt-2">Already Added</span>':
-`<button class="btn btn-light mt-2" onclick="showConfig(this,'${sym}','${id}','${side}')">ADD</button>`}
+${added ? '<span class="badge badge-added mt-2">Already Added</span>' :
+                            `<button class="btn btn-light mt-2" onclick="showConfig(this,'${sym}','${id}','${side}')">ADD</button>`}
 <div class="config mt-2 d-none">
 <input class="form-control mb-1 a">
 <input class="form-control mb-1 b">
@@ -260,49 +401,49 @@ ${added?'<span class="badge badge-added mt-2">Already Added</span>':
 </div>
 </div>
 </div>`;
-});
-}
+                });
+            }
 
-renderQueue();
-}
+            renderQueue();
+        }
 
-function showConfig(btn,sym,id,side){
+        function showConfig(btn, sym, id, side) {
 
-const box=btn.parentElement.querySelector(".config");
-box.classList.remove("d-none");
-const i=box.querySelectorAll("input");
+            const box = btn.parentElement.querySelector(".config");
+            box.classList.remove("d-none");
+            const i = box.querySelectorAll("input");
 
-if(side=="buy"){
-if(sym.includes("BTC")){i[0].value=500;i[1].value=5;i[2].value=10;i[3].value=1;i[4].value=true;}
-if(sym.includes("ETH")){i[0].value=500;i[1].value=0.05;i[2].value=10;i[3].value=0.1;i[4].value=true;}
-}
+            if (side == "buy") {
+                if (sym.includes("BTC")) { i[0].value = 500; i[1].value = 5; i[2].value = 10; i[3].value = 1; i[4].value = true; }
+                if (sym.includes("ETH")) { i[0].value = 500; i[1].value = 0.05; i[2].value = 10; i[3].value = 0.1; i[4].value = true; }
+            }
 
-if(side=="sell"){
-if(sym.includes("BTC")){i[0].value=500;i[1].value=125;i[2].value=1;i[3].value=150;i[4].value=id;}
-if(sym.includes("ETH")){i[0].value=500;i[1].value=125;i[2].value=0.05;i[3].value=8;i[4].value=id;}
-}
-}
+            if (side == "sell") {
+                if (sym.includes("BTC")) { i[0].value = 500; i[1].value = 125; i[2].value = 1; i[3].value = 150; i[4].value = id; }
+                if (sym.includes("ETH")) { i[0].value = 500; i[1].value = 125; i[2].value = 0.05; i[3].value = 8; i[4].value = id; }
+            }
+        }
 
-function queueOrder(sym,id,side,btn){
-if(isAlreadyAdded(id)){alert("Duplicate!");return;}
-const i=btn.parentElement.querySelectorAll("input");
-queue.push({symbol:sym,id:id,side:side,a:i[0].value,b:i[1].value,c:i[2].value,d:i[3].value,e:i[4].value});
-render();
-}
+        function queueOrder(sym, id, side, btn) {
+            if (isAlreadyAdded(id)) { alert("Duplicate!"); return; }
+            const i = btn.parentElement.querySelectorAll("input");
+            queue.push({ symbol: sym, id: id, side: side, a: i[0].value, b: i[1].value, c: i[2].value, d: i[3].value, e: i[4].value });
+            render();
+        }
 
-function renderQueue(){
+        function renderQueue() {
 
-queueView.innerHTML="";
+            queueView.innerHTML = "";
 
-if(queue.length===0){
-queueView.innerHTML = `<div class="col-12">
+            if (queue.length === 0) {
+                queueView.innerHTML = `<div class="col-12">
 <div class="alert alert-secondary text-center">Queue is Empty</div>
 </div>`;
-return;
-}
+                return;
+            }
 
-queue.forEach((q,index)=>{
-queueView.innerHTML+=`
+            queue.forEach((q, index) => {
+                queueView.innerHTML += `
 <div class="col-md-4">
 <div class="card queue-card p-3 mb-3 text-white">
 <b>${q.symbol}</b>
@@ -311,182 +452,404 @@ queueView.innerHTML+=`
 <button class="btn btn-danger mt-2" onclick="removeQueue(${index})">Remove</button>
 </div>
 </div>`;
-});
-}
+            });
+        }
 
-function removeQueue(i){
-queue.splice(i,1);
-render();
-}
+        function removeQueue(i) {
+            queue.splice(i, 1);
+            render();
+        }
 
-function finalMerge(){
-queue.forEach(q=>{
-const id=String(q.id);
+        function finalMerge() {
+            queue.forEach(q => {
+                const id = String(q.id);
 
-if(!dataJson.symbols.includes(q.symbol))
-dataJson.symbols.push(q.symbol);
+                if (!dataJson.symbols.includes(q.symbol))
+                    dataJson.symbols.push(q.symbol);
 
-if(q.side=="buy"){
-dataJson.allowedOrderforFunc2[id]=q.e==="true"||q.e===true;
-dataJson.minUpdateOrderLimitForFunc2[id]=Number(q.d);
-dataJson.dropThresholdForFunc2[id]=Number(q.c);
-dataJson.tickSizeForFunc2[id]=Number(q.b);
-dataJson.filterSizeForFunc2[id]=Number(q.a);
-}
+                if (q.side == "buy") {
+                    dataJson.allowedOrderforFunc2[id] = q.e === "true" || q.e === true;
+                    dataJson.minUpdateOrderLimitForFunc2[id] = Number(q.d);
+                    dataJson.dropThresholdForFunc2[id] = Number(q.c);
+                    dataJson.tickSizeForFunc2[id] = Number(q.b);
+                    dataJson.filterSizeForFunc2[id] = Number(q.a);
+                }
 
-if(q.side=="sell"){
-if(!dataJson.updateSellOrderIdList.includes(Number(id)))
-dataJson.updateSellOrderIdList.push(Number(id));
+                if (q.side == "sell") {
+                    if (!dataJson.updateSellOrderIdList.includes(Number(id)))
+                        dataJson.updateSellOrderIdList.push(Number(id));
 
-dataJson.PriceChangeDiffForFunc3[id]=Number(q.c);
-dataJson.marketPriceCorrectionForFunc3[id]=Number(q.b);
-dataJson.filterSizeForFunc3[id]=Number(q.a);
-dataJson.minTargetPriceToSellForFunc3[id]=Number(q.d);
-}
-});
-queue=[];
-render();
-preview.innerText = formatJsonLikeDataFile(dataJson);
-}
+                    dataJson.PriceChangeDiffForFunc3[id] = Number(q.c);
+                    dataJson.marketPriceCorrectionForFunc3[id] = Number(q.b);
+                    dataJson.filterSizeForFunc3[id] = Number(q.a);
+                    dataJson.minTargetPriceToSellForFunc3[id] = Number(q.d);
+                }
+            });
+            queue = [];
+            render();
+            preview.innerText = formatJsonLikeDataFile(dataJson);
+        }
 
-function removeUnnecessary(){
+        function removeUnnecessary() {
 
-const openBuyIds = ordersJson
-.filter(o => o.side.toLowerCase() === "buy")
-.map(o => String(o.id));
+            const openBuyIds = ordersJson
+                .filter(o => o.side.toLowerCase() === "buy")
+                .map(o => String(o.id));
 
-const openSellIds = ordersJson
-.filter(o => o.side.toLowerCase() === "sell")
-.map(o => String(o.id));
+            const openSellIds = ordersJson
+                .filter(o => o.side.toLowerCase() === "sell")
+                .map(o => String(o.id));
 
-const openSymbols = ordersJson.map(o => o.product_symbol.toUpperCase());
-
-
-// ---------------- MIN 2 HELPER ----------------
-function ensureMinTwo(allIds, openIds){
-
-let unique = [...new Set(allIds.map(String))];
-
-// keep all open
-let final = unique.filter(id => openIds.includes(id));
-
-// fallback older if less than 2
-for(let id of unique){
-if(final.length >= 2) break;
-if(!final.includes(id)) final.push(id);
-}
-
-// if still <2 but some exist
-while(final.length < 2 && unique.length > 0){
-let next = unique.find(id => !final.includes(id));
-if(!next) break;
-final.push(next);
-}
-
-return final;
-}
-
-function filterByIds(obj, ids){
-let newObj = {};
-ids.forEach(id=>{
-if(obj && obj[id] !== undefined){
-newObj[id] = obj[id];
-}
-});
-return newObj;
-}
+            const openSymbols = ordersJson.map(o => o.product_symbol.toUpperCase());
 
 
-// ================= FUNC2 =================
-let func2All = [
-...Object.keys(dataJson.allowedOrderforFunc2 || {}),
-...Object.keys(dataJson.minUpdateOrderLimitForFunc2 || {}),
-...Object.keys(dataJson.dropThresholdForFunc2 || {}),
-...Object.keys(dataJson.tickSizeForFunc2 || {}),
-...Object.keys(dataJson.filterSizeForFunc2 || {})
-];
+            // ---------------- MIN 2 HELPER ----------------
+            function ensureMinTwo(allIds, openIds) {
 
-let bestBuy = ensureMinTwo(func2All, openBuyIds);
+                let unique = [...new Set(allIds.map(String))];
 
-dataJson.allowedOrderforFunc2 = filterByIds(dataJson.allowedOrderforFunc2, bestBuy);
-dataJson.minUpdateOrderLimitForFunc2 = filterByIds(dataJson.minUpdateOrderLimitForFunc2, bestBuy);
-dataJson.dropThresholdForFunc2 = filterByIds(dataJson.dropThresholdForFunc2, bestBuy);
-dataJson.tickSizeForFunc2 = filterByIds(dataJson.tickSizeForFunc2, bestBuy);
-dataJson.filterSizeForFunc2 = filterByIds(dataJson.filterSizeForFunc2, bestBuy);
+                // keep all open
+                let final = unique.filter(id => openIds.includes(id));
 
+                // fallback older if less than 2
+                for (let id of unique) {
+                    if (final.length >= 2) break;
+                    if (!final.includes(id)) final.push(id);
+                }
 
-// ================= FUNC3 =================
-let func3All = [
-...Object.keys(dataJson.PriceChangeDiffForFunc3 || {}),
-...Object.keys(dataJson.marketPriceCorrectionForFunc3 || {}),
-...Object.keys(dataJson.filterSizeForFunc3 || {}),
-...Object.keys(dataJson.minTargetPriceToSellForFunc3 || {})
-];
+                // if still <2 but some exist
+                while (final.length < 2 && unique.length > 0) {
+                    let next = unique.find(id => !final.includes(id));
+                    if (!next) break;
+                    final.push(next);
+                }
 
-let bestSell = ensureMinTwo(func3All, openSellIds);
+                return final;
+            }
 
-dataJson.PriceChangeDiffForFunc3 = filterByIds(dataJson.PriceChangeDiffForFunc3, bestSell);
-dataJson.marketPriceCorrectionForFunc3 = filterByIds(dataJson.marketPriceCorrectionForFunc3, bestSell);
-dataJson.filterSizeForFunc3 = filterByIds(dataJson.filterSizeForFunc3, bestSell);
-dataJson.minTargetPriceToSellForFunc3 = filterByIds(dataJson.minTargetPriceToSellForFunc3, bestSell);
-
-
-// ================= SELL LIST =================
-let sellList = [...new Set((dataJson.updateSellOrderIdList || []).map(String))];
-let bestSellList = ensureMinTwo(sellList, openSellIds);
-dataJson.updateSellOrderIdList = bestSellList.map(Number);
+            function filterByIds(obj, ids) {
+                let newObj = {};
+                ids.forEach(id => {
+                    if (obj && obj[id] !== undefined) {
+                        newObj[id] = obj[id];
+                    }
+                });
+                return newObj;
+            }
 
 
-// ================= SYMBOLS =================
-let uniqueSymbols = [...new Set(dataJson.symbols || [])];
+            // ================= FUNC2 =================
+            let func2All = [
+                ...Object.keys(dataJson.allowedOrderforFunc2 || {}),
+                ...Object.keys(dataJson.minUpdateOrderLimitForFunc2 || {}),
+                ...Object.keys(dataJson.dropThresholdForFunc2 || {}),
+                ...Object.keys(dataJson.tickSizeForFunc2 || {}),
+                ...Object.keys(dataJson.filterSizeForFunc2 || {})
+            ];
 
-let finalSymbols = uniqueSymbols.filter(s => openSymbols.includes(s));
+            let bestBuy = ensureMinTwo(func2All, openBuyIds);
 
-for(let s of uniqueSymbols){
-if(finalSymbols.length >= 2) break;
-if(!finalSymbols.includes(s)) finalSymbols.push(s);
-}
-
-while(finalSymbols.length < 2 && uniqueSymbols.length > 0){
-let next = uniqueSymbols.find(s => !finalSymbols.includes(s));
-if(!next) break;
-finalSymbols.push(next);
-}
-
-dataJson.symbols = finalSymbols;
+            dataJson.allowedOrderforFunc2 = filterByIds(dataJson.allowedOrderforFunc2, bestBuy);
+            dataJson.minUpdateOrderLimitForFunc2 = filterByIds(dataJson.minUpdateOrderLimitForFunc2, bestBuy);
+            dataJson.dropThresholdForFunc2 = filterByIds(dataJson.dropThresholdForFunc2, bestBuy);
+            dataJson.tickSizeForFunc2 = filterByIds(dataJson.tickSizeForFunc2, bestBuy);
+            dataJson.filterSizeForFunc2 = filterByIds(dataJson.filterSizeForFunc2, bestBuy);
 
 
-// ---------------- DONE ----------------
-preview.innerText = formatJsonLikeDataFile(dataJson);
-alert("Cleanup Done (Min 2 Safe)");
-}
+            // ================= FUNC3 =================
+            let func3All = [
+                ...Object.keys(dataJson.PriceChangeDiffForFunc3 || {}),
+                ...Object.keys(dataJson.marketPriceCorrectionForFunc3 || {}),
+                ...Object.keys(dataJson.filterSizeForFunc3 || {}),
+                ...Object.keys(dataJson.minTargetPriceToSellForFunc3 || {})
+            ];
 
-function formatJsonLikeDataFile(obj){
-let out = "{\n";
-Object.keys(obj).forEach((key,index)=>{
-out += `"${key}":${JSON.stringify(obj[key])}`;
-if(index !== Object.keys(obj).length-1) out += ",\n";
-});
-out += "\n}";
-return out;
-}
+            let bestSell = ensureMinTwo(func3All, openSellIds);
 
-function copyJson(){
-navigator.clipboard.writeText(preview.innerText);
-alert("Copied!");
-}
-const navLinks=document.querySelectorAll('.navbar .nav-link');
-navLinks.forEach(l=>l.addEventListener('click',e=>{
-navLinks.forEach(x=>x.classList.remove('active'));
-e.currentTarget.classList.add('active');
-}));
-window.addEventListener('load',()=>{
-const hash=location.hash||'#open-orders';
-const current=[...navLinks].find(l=>l.getAttribute('href')===hash);
-if(current) current.classList.add('active');
-});
+            dataJson.PriceChangeDiffForFunc3 = filterByIds(dataJson.PriceChangeDiffForFunc3, bestSell);
+            dataJson.marketPriceCorrectionForFunc3 = filterByIds(dataJson.marketPriceCorrectionForFunc3, bestSell);
+            dataJson.filterSizeForFunc3 = filterByIds(dataJson.filterSizeForFunc3, bestSell);
+            dataJson.minTargetPriceToSellForFunc3 = filterByIds(dataJson.minTargetPriceToSellForFunc3, bestSell);
 
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+            // ================= SELL LIST =================
+            let sellList = [...new Set((dataJson.updateSellOrderIdList || []).map(String))];
+            let bestSellList = ensureMinTwo(sellList, openSellIds);
+            dataJson.updateSellOrderIdList = bestSellList.map(Number);
+
+
+            // ================= SYMBOLS =================
+            let uniqueSymbols = [...new Set(dataJson.symbols || [])];
+
+            let finalSymbols = uniqueSymbols.filter(s => openSymbols.includes(s));
+
+            for (let s of uniqueSymbols) {
+                if (finalSymbols.length >= 2) break;
+                if (!finalSymbols.includes(s)) finalSymbols.push(s);
+            }
+
+            while (finalSymbols.length < 2 && uniqueSymbols.length > 0) {
+                let next = uniqueSymbols.find(s => !finalSymbols.includes(s));
+                if (!next) break;
+                finalSymbols.push(next);
+            }
+
+            dataJson.symbols = finalSymbols;
+
+
+            // ---------------- DONE ----------------
+            preview.innerText = formatJsonLikeDataFile(dataJson);
+            alert("Cleanup Done (Min 2 Safe)");
+        }
+
+        function formatJsonLikeDataFile(obj) {
+            let out = "{\n";
+            Object.keys(obj).forEach((key, index) => {
+                out += `"${key}":${JSON.stringify(obj[key])}`;
+                if (index !== Object.keys(obj).length - 1) out += ",\n";
+            });
+            out += "\n}";
+            return out;
+        }
+
+        function copyJson() {
+            navigator.clipboard.writeText(preview.innerText);
+            alert("Copied!");
+        }
+        const navLinks = document.querySelectorAll('.navbar .nav-link');
+        navLinks.forEach(l => l.addEventListener('click', e => {
+            navLinks.forEach(x => x.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+        }));
+        window.addEventListener('load', () => {
+            const hash = location.hash || '#open-orders';
+            const current = [...navLinks].find(l => l.getAttribute('href') === hash);
+            if (current) current.classList.add('active');
+        });
+
+        /* ================= API FEATURE ================= */
+
+        let apiToken = "";
+        const storedToken = localStorage.getItem("gh_token");
+
+        if (storedToken) {
+            apiToken = decryptToken(storedToken);
+            apiTokenInput = document.getElementById("apiToken");
+            if (apiTokenInput) apiTokenInput.value = apiToken;
+        }
+
+        const useApi = document.getElementById("useApi");
+        const apiBox = document.getElementById("apiBox");
+        const uploadBtn = document.getElementById("uploadBtn");
+
+        if (useApi) {
+            useApi.addEventListener("change", () => {
+
+                localStorage.setItem("use_api_enabled", useApi.checked);
+
+                if (useApi.checked) {
+                    apiBox.classList.remove("d-none");
+                    uploadBtn.classList.remove("d-none");
+                } else {
+                    apiBox.classList.add("d-none");
+                    uploadBtn.classList.add("d-none");
+                }
+
+            });
+        }
+        const savedApiState = localStorage.getItem("use_api_enabled");
+
+        if (savedApiState === "true") {
+            useApi.checked = true;
+            apiBox.classList.remove("d-none");
+            uploadBtn.classList.remove("d-none");
+        } else {
+            useApi.checked = false;
+        }
+        /* ===== encryption ===== */
+
+        function xorCipher(text, key) {
+            let out = "";
+            for (let i = 0; i < text.length; i++) {
+                out += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+            }
+            return out;
+        }
+
+        function encryptToken(token) {
+            const salt = Math.random().toString(36).substring(2, 8);
+            const key = "K" + salt;
+            let mixed = xorCipher(token, key);
+            mixed = [...mixed].map(c => String.fromCharCode(c.charCodeAt(0) + 3)).join("");
+            return salt + "." + btoa(mixed);
+        }
+
+        function decryptToken(enc) {
+            try {
+                const parts = enc.split(".");
+                const salt = parts[0];
+                const data = parts[1];
+                const key = "K" + salt;
+                let mixed = atob(data);
+                mixed = [...mixed].map(c => String.fromCharCode(c.charCodeAt(0) - 3)).join("");
+                return xorCipher(mixed, key);
+            } catch (e) { return ""; }
+        }
+
+        function saveApi() {
+            const token = document.getElementById("apiToken").value.trim();
+            if (!token) { alert("Enter token"); return; }
+            localStorage.setItem("gh_token", encryptToken(token));
+            apiToken = token;
+            alert("Token Saved");
+        }
+        function setUploadStatus(msg, color = "light") {
+            const box = document.getElementById("uploadStatus");
+            box.innerHTML = msg;
+            box.className = "mt-2 small text-" + color;
+        }
+        /* ===== override fetchAll with API option ===== */
+
+        const originalFetchAll = fetchAll;
+
+        fetchAll = async function () {
+
+            showLoading();
+
+            try {
+
+                if (useApi && useApi.checked && apiToken) {
+
+                    // API FETCH (no cache)
+
+                    const d = await fetch(
+                        "https://api.github.com/repos/aisaf8873/abc/contents/data.json?t=" + Date.now(),
+                        {
+                            headers: { Authorization: "token " + apiToken }
+                        }).then(r => r.json());
+
+                    const o = await fetch(
+                        "https://api.github.com/repos/aisaf8873/abc/contents/openOrders.json?t=" + Date.now(),
+                        {
+                            headers: { Authorization: "token " + apiToken }
+                        }).then(r => r.json());
+
+                    dataJson = JSON.parse(atob(d.content));
+                    ordersJson = JSON.parse(atob(o.content));
+
+                    render();
+
+                } else {
+
+                    // NORMAL FETCH (your original logic)
+
+                    dataJson = await fetch(dataUrl.value + "?t=" + Date.now()).then(r => r.json());
+                    ordersJson = await fetch(ordersUrl.value + "?t=" + Date.now()).then(r => r.json());
+
+                    render();
+
+                }
+
+            } catch (e) {
+
+                alert("Fetch failed");
+                console.error(e);
+
+            }
+
+            hideLoading();
+
+        }
+
+        /* ===== upload ===== */
+
+        async function uploadJson() {
+
+            if (!apiToken) {
+                alert("API token required");
+                return;
+            }
+
+            const progressBox = document.getElementById("uploadProgressBox");
+            const progress = document.getElementById("uploadProgress");
+
+            progressBox.classList.remove("d-none");
+
+            let percent = 0;
+
+            const anim = setInterval(() => {
+                percent += 5;
+                if (percent > 100) percent = 100;
+                progress.style.width = percent + "%";
+                progress.innerText = percent + "%";
+                if (percent === 100) clearInterval(anim);
+            }, 75);
+
+            try {
+
+                const repoPath = "data.json";
+
+                console.log("Getting SHA...");
+                setUploadStatus("Getting SHA...");
+
+                const shaRes = await fetch(
+                    "https://api.github.com/repos/aisaf8873/abc/contents/" + repoPath,
+                    { headers: { Authorization: "token " + apiToken } }
+                );
+
+                if (!shaRes.ok) {
+                    const txt = await shaRes.text();
+                    throw new Error("SHA fetch failed: " + txt);
+                    setUploadStatus("❌ SHA fetch failed: " + txt, "danger");
+                }
+
+                const shaData = await shaRes.json();
+
+                console.log("SHA received:", shaData.sha);
+
+                const content = btoa(unescape(encodeURIComponent(preview.innerText)));
+
+                console.log("Uploading file...");
+                setUploadStatus("Uploading file...");
+                const uploadRes = await fetch(
+                    "https://api.github.com/repos/aisaf8873/abc/contents/" + repoPath,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: "token " + apiToken,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            message: "update data.json",
+                            content: content,
+                            sha: shaData.sha
+                        })
+                    }
+                );
+
+                if (!uploadRes.ok) {
+                    const err = await uploadRes.text();
+                    throw new Error("Upload failed: " + err);
+                    setUploadStatus("❌ Upload failed: " + err, "danger");
+                }
+
+                const result = await uploadRes.json();
+
+                console.log("Upload success:", result);
+                setUploadStatus("✅ Upload successful");
+
+            } catch (err) {
+
+                console.error("Upload error:", err);
+                alert("❌ Upload failed\n\n" + err.message);
+                setUploadStatus("❌ Upload failed: " + err.message, "danger");
+
+            }
+
+            progressBox.classList.add("d-none");
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

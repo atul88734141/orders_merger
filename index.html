@@ -148,7 +148,7 @@
         }
 
         .card-sell {
-            background: linear-gradient(180deg, rgba(127, 29, 29, .9), rgba(107, 19, 19, .85))
+            background: linear-gradient(180deg, rgba(86, 49, 49, 0.9), rgba(107, 19, 19, .85))
         }
 
         .queue-card {
@@ -156,13 +156,15 @@
         }
 
         .badge-added {
-            background: #22c55e;
+            background: #18271e00;
             color: #0b111f;
             border-radius: 999px;
             padding: .35rem .6rem;
             font-weight: 600
         }
-
+        .price-H {
+            color: var(--success);
+        }
         hr {
             border-color: rgba(148, 163, 184, .12);
             margin: 2rem 0
@@ -389,7 +391,17 @@
 <b>${sym}</b>
 <div>ID: ${id}</div>
 <div>${side}</div>
-${added ? '<span class="badge badge-added mt-2">Already Added</span>' :
+<div>Price: <b class="price-H">${o.limit_price ?? "N/A"}</b></div>
+<div>Size: ${o.size}</div>
+${added ?
+                            `<div class="mt-2 d-flex gap-2">
+<span class="badge badge-added">Added</span>
+<button class="btn btn-warning btn-sm"
+onclick="editExisting('${sym}','${id}','${side}',this)">
+EDIT
+</button>
+</div>`
+                            :
                             `<button class="btn btn-light mt-2" onclick="showConfig(this,'${sym}','${id}','${side}')">ADD</button>`}
 <div class="config mt-2 d-none">
 <input class="form-control mb-1 a">
@@ -424,10 +436,59 @@ ${added ? '<span class="badge badge-added mt-2">Already Added</span>' :
             }
         }
 
+        function editExisting(sym, id, side, btn) {
+
+            const box = btn.closest(".card").querySelector(".config");
+            box.classList.remove("d-none");
+
+            const i = box.querySelectorAll("input");
+
+            if (side === "buy") {
+
+                i[0].value = dataJson.filterSizeForFunc2?.[id] ?? "";
+                i[1].value = dataJson.tickSizeForFunc2?.[id] ?? "";
+                i[2].value = dataJson.dropThresholdForFunc2?.[id] ?? "";
+                i[3].value = dataJson.minUpdateOrderLimitForFunc2?.[id] ?? "";
+                i[4].value = dataJson.allowedOrderforFunc2?.[id] ?? true;
+
+            }
+
+            if (side === "sell") {
+
+                i[0].value = dataJson.filterSizeForFunc3?.[id] ?? "";
+                i[1].value = dataJson.marketPriceCorrectionForFunc3?.[id] ?? "";
+                i[2].value = dataJson.PriceChangeDiffForFunc3?.[id] ?? "";
+                i[3].value = dataJson.minTargetPriceToSellForFunc3?.[id] ?? "";
+                i[4].value = id;
+
+            }
+
+            window.scrollTo({
+                top: btn.closest(".card").offsetTop - 120,
+                behavior: "smooth"
+            });
+
+        }
+
         function queueOrder(sym, id, side, btn) {
-            if (isAlreadyAdded(id)) { alert("Duplicate!"); return; }
+            if (queue.some(q => String(q.id) === String(id))) {
+                alert("Already in queue!");
+                return;
+            }
             const i = btn.parentElement.querySelectorAll("input");
-            queue.push({ symbol: sym, id: id, side: side, a: i[0].value, b: i[1].value, c: i[2].value, d: i[3].value, e: i[4].value });
+            const order = ordersJson.find(o => String(o.id) === String(id));
+
+            queue.push({
+                symbol: sym,
+                id: id,
+                side: side,
+                price: order ? order.limit_price : "N/A",
+                a: i[0].value,
+                b: i[1].value,
+                c: i[2].value,
+                d: i[3].value,
+                e: i[4].value
+            });
             render();
         }
 
@@ -449,6 +510,8 @@ ${added ? '<span class="badge badge-added mt-2">Already Added</span>' :
 <b>${q.symbol}</b>
 <div>ID: ${q.id}</div>
 <div>${q.side}</div>
+<div>Price: <b class="price-H">${(q.limit_price || q.price) ?? "N/A"}</b></div>
+<div>Size: ${o.size}</div>
 <button class="btn btn-danger mt-2" onclick="removeQueue(${index})">Remove</button>
 </div>
 </div>`;

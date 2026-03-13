@@ -333,8 +333,8 @@
         let dataJson = {}, ordersJson = [], queue = [];
         window.addEventListener("load", () => {
 
-            const savedDataUrl = localStorage.getItem("data_url_cache");
-            const savedOrdersUrl = localStorage.getItem("orders_url_cache");
+            const savedDataUrl = localStorage.getItem("data_url_cache_");
+            const savedOrdersUrl = localStorage.getItem("orders_url_cache_");
 
             if (savedDataUrl) {
                 document.getElementById("dataUrl").value = savedDataUrl;
@@ -346,11 +346,11 @@
 
         });
         dataUrl.addEventListener("change", () => {
-            localStorage.setItem("data_url_cache", dataUrl.value);
+            localStorage.setItem("data_url_cache_", dataUrl.value);
         });
 
         ordersUrl.addEventListener("change", () => {
-            localStorage.setItem("orders_url_cache", ordersUrl.value);
+            localStorage.setItem("orders_url_cache_", ordersUrl.value);
         });
         window.onload = fetchAll;
 
@@ -365,8 +365,8 @@
         }
 
         async function fetchAll() {
-            localStorage.setItem("data_url_cache", dataUrl.value);
-            localStorage.setItem("orders_url_cache", ordersUrl.value);
+            localStorage.setItem("data_url_cache_", dataUrl.value);
+            localStorage.setItem("orders_url_cache_", ordersUrl.value);
 
             showLoading();
 

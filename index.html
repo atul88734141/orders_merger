@@ -281,9 +281,9 @@
     <main class="container py-3">
         <div id="data-sources" class="card p-3 mb-3">
             <input id="dataUrl" class="form-control mb-2"
-                value="https://raw.githubusercontent.com/aisaf8873/abc/main/data.json">
+                value="https://raw.githubusercontent.com/atul88734141/abc/main/data.json">
             <input id="ordersUrl" class="form-control mb-2"
-                value="https://raw.githubusercontent.com/aisaf8873/abc/main/openOrders.json">
+                value="https://raw.githubusercontent.com/atul88734141/abc/main/openOrders.json">
             <button id="fetchBtn" class="btn btn-primary w-100" onclick="fetchAll()">Fetch</button>
             <div id="inlineLoading" class="mt-2" aria-live="polite" role="status">
                 <div class="spinner-border text-primary" aria-hidden="true"></div>
@@ -811,13 +811,13 @@ EDIT
                     // API FETCH (no cache)
 
                     const d = await fetch(
-                        "https://api.github.com/repos/atul88734141/abc/contents/data.json?t=" + Date.now(),
+                        "https://api.github.com/repos/aisaf8873/abc/contents/data.json?t=" + Date.now(),
                         {
                             headers: { Authorization: "token " + apiToken }
                         }).then(r => r.json());
 
                     const o = await fetch(
-                        "https://api.github.com/repos/atul88734141/abc/contents/openOrders.json?t=" + Date.now(),
+                        "https://api.github.com/repos/aisaf8873/abc/contents/openOrders.json?t=" + Date.now(),
                         {
                             headers: { Authorization: "token " + apiToken }
                         }).then(r => r.json());

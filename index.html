@@ -162,9 +162,11 @@
             padding: .35rem .6rem;
             font-weight: 600
         }
+
         .price-H {
             color: var(--success);
         }
+
         hr {
             border-color: rgba(148, 163, 184, .12);
             margin: 2rem 0
@@ -329,7 +331,27 @@
     <script>
 
         let dataJson = {}, ordersJson = [], queue = [];
+        window.addEventListener("load", () => {
 
+            const savedDataUrl = localStorage.getItem("data_url_cache");
+            const savedOrdersUrl = localStorage.getItem("orders_url_cache");
+
+            if (savedDataUrl) {
+                document.getElementById("dataUrl").value = savedDataUrl;
+            }
+
+            if (savedOrdersUrl) {
+                document.getElementById("ordersUrl").value = savedOrdersUrl;
+            }
+
+        });
+        dataUrl.addEventListener("change", () => {
+            localStorage.setItem("data_url_cache", dataUrl.value);
+        });
+
+        ordersUrl.addEventListener("change", () => {
+            localStorage.setItem("orders_url_cache", ordersUrl.value);
+        });
         window.onload = fetchAll;
 
         function showLoading() {
@@ -343,6 +365,8 @@
         }
 
         async function fetchAll() {
+            localStorage.setItem("data_url_cache", dataUrl.value);
+            localStorage.setItem("orders_url_cache", ordersUrl.value);
 
             showLoading();
 
@@ -787,13 +811,13 @@ EDIT
                     // API FETCH (no cache)
 
                     const d = await fetch(
-                        "https://api.github.com/repos/aisaf8873/abc/contents/data.json?t=" + Date.now(),
+                        "https://api.github.com/repos/atul88734141/abc/contents/data.json?t=" + Date.now(),
                         {
                             headers: { Authorization: "token " + apiToken }
                         }).then(r => r.json());
 
                     const o = await fetch(
-                        "https://api.github.com/repos/aisaf8873/abc/contents/openOrders.json?t=" + Date.now(),
+                        "https://api.github.com/repos/atul88734141/abc/contents/openOrders.json?t=" + Date.now(),
                         {
                             headers: { Authorization: "token " + apiToken }
                         }).then(r => r.json());
